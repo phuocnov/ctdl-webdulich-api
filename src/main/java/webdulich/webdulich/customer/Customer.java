@@ -2,35 +2,78 @@ package webdulich.webdulich.customer;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Customer {
-    private Long id;
+    @Id
+    @SequenceGenerator(
+        name = "customer_sequence",
+        sequenceName = "customer_sequence",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "customer_sequence"
+    )
+    private int id;
     private String name;
     private Integer age;
     private LocalDate dob;
     private String email;
+    private String username;
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPwd() {
+        return this.pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+    private String pwd;
 
     public Customer(){
     }
 
-    public Customer(Long id, String name, Integer age, LocalDate dob, String email) {
+
+    public Customer(int id, String name, Integer age, LocalDate dob, String email, String username, String pwd) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.dob = dob;
         this.email = email;
+        this.username = username;
+        this.pwd = pwd;
     }
-    public Customer(String name, Integer age, LocalDate dob, String email) {
+   
+    public Customer(String name, Integer age, LocalDate dob, String email, String username, String pwd) {
         this.name = name;
         this.age = age;
         this.dob = dob;
         this.email = email;
+        this.username = username;
+        this.pwd = pwd;
     }
 
-    public Long getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

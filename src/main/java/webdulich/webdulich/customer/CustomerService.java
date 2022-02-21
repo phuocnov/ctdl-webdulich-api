@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     public List<Customer> gCustomers() {
         return (List<Customer>) List.of(
-                new Customer(12L, "Nguyen Huu Phuoc", 21, LocalDate.of(2001, Month.DECEMBER, 5),
-                        "phuocnguyenhuu806@gmail.com"));
+                new Customer(1, "Nguyen Huu Phuoc", 21, LocalDate.of(2001, Month.DECEMBER, 5),
+                        "phuocnguyenhuu806@gmail.com", "phuocnov", "123456"));
     }
 }
