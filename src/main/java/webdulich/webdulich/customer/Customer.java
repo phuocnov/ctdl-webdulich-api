@@ -1,6 +1,7 @@
 package webdulich.webdulich.customer;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-@Entity
+@Entity(name = "customer")
 @Table
 public class Customer {
     @Id
@@ -22,8 +24,10 @@ public class Customer {
         strategy = GenerationType.SEQUENCE,
         generator = "customer_sequence"
     )
-    private int id;
+    private int ID;
     private String name;
+
+    @Transient
     private Integer age;
     private LocalDate dob;
     private String email;
@@ -50,10 +54,9 @@ public class Customer {
     }
 
 
-    public Customer(int id, String name, Integer age, LocalDate dob, String email, String username, String pwd) {
-        this.id = id;
+    public Customer(int id, String name, LocalDate dob, String email, String username, String pwd) {
+        this.ID = id;
         this.name = name;
-        this.age = age;
         this.dob = dob;
         this.email = email;
         this.username = username;
@@ -70,11 +73,11 @@ public class Customer {
     }
 
     public int getId() {
-        return this.id;
+        return this.ID;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.ID = id;
     }
 
     public String getName() {
@@ -86,7 +89,7 @@ public class Customer {
     }
 
     public Integer getAge() {
-        return this.age;
+        return Period.between(dob, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {

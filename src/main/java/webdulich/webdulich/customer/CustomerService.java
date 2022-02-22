@@ -1,16 +1,28 @@
 package webdulich.webdulich.customer;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService {
+    private final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
     public List<Customer> gCustomers() {
-        return (List<Customer>) List.of(
-                new Customer(1, "Nguyen Huu Phuoc", 21, LocalDate.of(2001, Month.DECEMBER, 5),
-                        "phuocnguyenhuu806@gmail.com", "phuocnov", "123456"));
+        return customerRepository.findAll();
+    }
+
+    public void addNewCustomer(Customer customer) {
+        Optional<Customer> customerOptional = customerRepository.findCustomerByEmail(customer.getEmail());
+
+        if(customerOptional.isPresent()){
+            throw new IllegalArgumentException("email has taken!");
+        }
+        customerRepository.save(customer);
     }
 }
