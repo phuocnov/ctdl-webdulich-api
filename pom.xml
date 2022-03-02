@@ -86,7 +86,12 @@
         		<artifactId>heroku-maven-plugin</artifactId>
         		<version>3.0.3</version>
       		</plugin>
+			<configuration>
+  				<processTypes>
+     				<web>java $JAVA_OPTS -cp target/classes:target/dependency/* WebdulichApplication</web>
+  				</processTypes>
+			</configuration>
 		</plugins>
 	</build>
-
+	
 </project>
