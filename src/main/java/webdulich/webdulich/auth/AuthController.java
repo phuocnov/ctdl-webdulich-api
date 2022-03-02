@@ -1,7 +1,16 @@
 package webdulich.webdulich.auth;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import webdulich.webdulich.customer.Customer;
+import webdulich.webdulich.customer.CustomerRepository;
+import webdulich.webdulich.payload.LoginDto;
+import webdulich.webdulich.payload.SignupDto;
+import webdulich.webdulich.payload.TokenResponse;
+import webdulich.webdulich.role.RoleRepository;
+import webdulich.webdulich.security.JwtTokenProvider;
+import webdulich.webdulich.role.Role;
+
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "Auth controller exposes siginin and signup REST APIs")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -24,7 +32,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomerRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -35,9 +43,8 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
-    @ApiOperation(value = "REST API to Register or Signup user to Blog app")
     @PostMapping("/signin")
-    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<TokenResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
@@ -46,12 +53,11 @@ public class AuthController {
         // get token form tokenProvider
         String token = tokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JWTAuthResponse(token));
+        return ResponseEntity.ok(new TokenResponse(token));
     }
 
-    @ApiOperation(value = "REST API to Signin or Login user to Blog app")
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+    public ResponseEntity<?> registerUser(@RequestBody SignupDto signUpDto){
 
         // add check for username exists in a DB
         if(userRepository.existsByUsername(signUpDto.getUsername())){
@@ -64,11 +70,11 @@ public class AuthController {
         }
 
         // create user object
-        User user = new User();
+        Customer user = new Customer();
         user.setName(signUpDto.getName());
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setPwd(passwordEncoder.encode(signUpDto.getPassword()));
 
         Role roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
