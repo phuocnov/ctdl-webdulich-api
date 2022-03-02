@@ -87,7 +87,7 @@
         		<version>3.0.3</version>
 				<configuration>
   				<processTypes>
-     				<web>java $JAVA_OPTS -cp target/classes:target/dependency/* WebdulichApplication</web>
+     				<web>java -cp target/classes/;target/dependency/* webdulich.webdulich.WebdulichApplication</web>
   				</processTypes>
 			</configuration>
       		</plugin>
