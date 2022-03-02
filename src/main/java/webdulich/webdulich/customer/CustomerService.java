@@ -1,16 +1,27 @@
 package webdulich.webdulich.customer;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
+import java.util.Optional;
 
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import webdulich.webdulich.utils.AES;
+
+import lombok.*;
+
 
 @Service
 public class CustomerService {
+    private final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
     public List<Customer> gCustomers() {
-        return (List<Customer>) List.of(
-                new Customer(12L, "Nguyen Huu Phuoc", 21, LocalDate.of(2001, Month.DECEMBER, 5),
-                        "phuocnguyenhuu806@gmail.com"));
+        return customerRepository.findAll();
     }
 }

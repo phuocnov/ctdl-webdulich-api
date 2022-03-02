@@ -1,69 +1,25 @@
 package webdulich.webdulich.customer;
+import java.util.Set;
+import webdulich.webdulich.role.Role;
+import javax.persistence.*;
 
-import java.time.LocalDate;
+import lombok.*;
 
+@Data
+@Entity
+@Table(name = "customer")
 public class Customer {
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
-    private Integer age;
-    private LocalDate dob;
     private String email;
+    private String username;
+    private String pwd;
 
-    public Customer(){
-    }
-
-    public Customer(Long id, String name, Integer age, LocalDate dob, String email) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.dob = dob;
-        this.email = email;
-    }
-    public Customer(String name, Integer age, LocalDate dob, String email) {
-        this.name = name;
-        this.age = age;
-        this.dob = dob;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return this.age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public LocalDate getDob() {
-        return this.dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
 }

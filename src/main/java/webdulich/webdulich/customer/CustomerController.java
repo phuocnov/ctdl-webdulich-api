@@ -2,13 +2,12 @@ package webdulich.webdulich.customer;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @RequestMapping(path = "api/v1/customer")
 public class CustomerController {
@@ -17,17 +16,16 @@ public class CustomerController {
 
     @Autowired
     public CustomerController(CustomerService customerService) {
-        this.customerService = new CustomerService();
+        this.customerService = customerService;
     }
 
     @GetMapping
     public List<Customer> gCustomers() {
         return customerService.gCustomers();
     }
-
-    @PostMapping
-    public Customer pCustomer(@RequestBody Customer body) {
+    
+    @PutMapping
+    public void updateCustomerProfile(){
         
-        return body;
     }
 }
