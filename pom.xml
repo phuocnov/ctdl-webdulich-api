@@ -14,7 +14,6 @@
 	<name>webdulich</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>17</java.version>
 		<start-class>webdulich.webdulich.WebdulichApplication</start-class>
 	</properties>
 	<dependencies>
