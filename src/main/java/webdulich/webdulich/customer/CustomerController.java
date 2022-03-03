@@ -31,19 +31,6 @@ public class CustomerController {
     @GetMapping
     // @PreAuthorize("hasRole('ADMIN')")
     public List<Customer> gCustomers() {
-        Tour tour0 = new Tour(
-                "name",
-                "tour",
-                "schedule",
-                LocalDate.of(2022, 3, 3),
-                LocalDate.of(2022, 3, 6),
-                3000000,
-                "short description",
-                new TourDetails("schedule", "service", "note")
-            );
-            tourRepository.saveAll(
-                List.of(tour0)
-            );
         return customerService.gCustomers();
     }
     
