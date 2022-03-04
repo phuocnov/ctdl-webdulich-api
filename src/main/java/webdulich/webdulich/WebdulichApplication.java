@@ -44,6 +44,5 @@ public class WebdulichApplication implements CommandLineRunner {
 		Role userRole = new Role();
 		userRole.setName("ROLE_USER");
 		roleRepository.save(userRole);
-
 	}
 }

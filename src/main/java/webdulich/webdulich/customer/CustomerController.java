@@ -29,7 +29,7 @@ public class CustomerController {
     @Autowired
     TourRepository tourRepository;
     @GetMapping
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Customer> gCustomers() {
         return customerService.gCustomers();
     }
