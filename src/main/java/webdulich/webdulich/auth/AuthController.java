@@ -46,7 +46,7 @@ public class AuthController {
     private JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
-    public ResponseEntity<TokenResponse> authenticateUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<TokenResponse> authenticateUser(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
@@ -59,15 +59,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupDto signUpDto){
+    public ResponseEntity<?> registerUser(@RequestBody SignupDto signUpDto) {
 
         // add check for username exists in a DB
-        if(userRepository.existsByUsername(signUpDto.getUsername())){
+        if (userRepository.existsByUsername(signUpDto.getUsername())) {
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         // add check for email exists in DB
-        if(userRepository.existsByEmail(signUpDto.getEmail())){
+        if (userRepository.existsByEmail(signUpDto.getEmail())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
@@ -77,19 +77,39 @@ public class AuthController {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPwd(passwordEncoder.encode(signUpDto.getPassword()));
-        
+
         Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
         userRepository.save(user);
-        // try {
-        // } catch (Exception e) {
-            
-        // }
-
-        
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+    }
+    
 
+    @PostMapping("/signup-admin")
+    public ResponseEntity<?> registerAdmin(@RequestBody SignupDto signUpDto) {
+
+        // add check for username exists in a DB
+        if (userRepository.existsByUsername(signUpDto.getUsername())) {
+            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        // add check for email exists in DB
+        if (userRepository.existsByEmail(signUpDto.getEmail())) {
+            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        // create user object
+        Customer user = new Customer();
+        user.setName(signUpDto.getName());
+        user.setUsername(signUpDto.getUsername());
+        user.setEmail(signUpDto.getEmail());
+        user.setPwd(passwordEncoder.encode(signUpDto.getPassword()));
+
+        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        user.setRoles(Collections.singleton(roles));
+        userRepository.save(user);
+
+        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 }
-

@@ -18,7 +18,7 @@ import java.util.Date;
 
 import webdulich.webdulich.role.Role;
 
-// @ControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // handle specific exceptions
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -38,6 +38,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // roles exception
+    @ExceptionHandler(RolesExceptionHanlder.class)
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(RolesExceptionHanlder exception,
+                                                                        WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+    
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
             HttpHeaders headers,
