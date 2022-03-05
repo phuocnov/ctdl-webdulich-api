@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.java.Log;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -75,11 +77,16 @@ public class AuthController {
         user.setUsername(signUpDto.getUsername());
         user.setEmail(signUpDto.getEmail());
         user.setPwd(passwordEncoder.encode(signUpDto.getPassword()));
-
+        
         Role roles = roleRepository.findByName("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
-
         userRepository.save(user);
+        // try {
+        // } catch (Exception e) {
+            
+        // }
+
+        
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 
