@@ -26,21 +26,6 @@ public class TourController {
 
     @GetMapping
     public List<Tour> gTour(){
-        Tour tour = new Tour(
-            "name",
-            "tour",
-            "schedule",
-            LocalDate.now(),
-            LocalDate.now(),
-            300000000,
-            "mo ta ngan",
-            new TourDetails(
-                "detail schedules",
-                "any services?",
-                "not included tax or"
-            )
-        );
-        createTour(tour);
         return tourService.gTour();
     }
     
