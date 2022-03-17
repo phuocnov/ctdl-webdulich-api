@@ -3,6 +3,7 @@ package webdulich.webdulich.auth;
 import webdulich.webdulich.customer.Customer;
 import webdulich.webdulich.customer.CustomerRepository;
 import webdulich.webdulich.payload.LoginDto;
+import webdulich.webdulich.payload.SignupDao;
 import webdulich.webdulich.payload.SignupDto;
 import webdulich.webdulich.payload.TokenResponse;
 import webdulich.webdulich.role.RoleRepository;
@@ -60,16 +61,16 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupDto signUpDto) {
+    public ResponseEntity<SignupDao> registerUser(@RequestBody SignupDto signUpDto) {
 
         // add check for username exists in a DB
         if (userRepository.existsByUsername(signUpDto.getUsername())) {
-            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         // add check for email exists in DB
         if (userRepository.existsByEmail(signUpDto.getEmail())) {
-            return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         // create user object
@@ -83,7 +84,7 @@ public class AuthController {
         user.setRoles(Collections.singleton(roles));
         userRepository.save(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        return new ResponseEntity<SignupDao>(new SignupDao(signUpDto), HttpStatus.OK);
     }
     
 
