@@ -28,7 +28,7 @@ public class Tour {
     @Id
     @SequenceGenerator(name = "tour_sequence", sequenceName = "tour_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tour_sequence")
-    private int id;
+    private long id;
     private String name;
     private String tour;
     @Transient
