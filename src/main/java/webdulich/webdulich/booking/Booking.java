@@ -3,12 +3,9 @@ package webdulich.webdulich.booking;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import java.security.Timestamp;
 import java.util.Date;
-import java.util.Set;
 
 import webdulich.webdulich.customer.Customer;
-import webdulich.webdulich.role.Role;
 import webdulich.webdulich.tour.Tour;
 
 import javax.persistence.*;

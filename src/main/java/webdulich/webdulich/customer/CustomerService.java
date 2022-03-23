@@ -24,4 +24,8 @@ public class CustomerService {
     public List<Customer> gCustomers() {
         return customerRepository.findAll();
     }
+
+    public Optional<Customer> findByName(String name){
+        return customerRepository.findByNameOrUsername(name, name);
+    }
 }
