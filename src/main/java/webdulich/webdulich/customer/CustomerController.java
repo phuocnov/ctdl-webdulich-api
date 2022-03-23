@@ -49,7 +49,6 @@ public class CustomerController {
     }
     
     @GetMapping(path = "/user-info")
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> userInfo() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(userDetails, HttpStatus.OK);
