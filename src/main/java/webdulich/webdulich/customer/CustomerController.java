@@ -48,21 +48,10 @@ public class CustomerController {
         return customerService.gCustomers();
     }
     
-    @PutMapping
-    public void updateCustomerProfile(){
-        
-    }
-
     @GetMapping(path = "/user-info")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> userInfo() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return new ResponseEntity<>(userDetails, HttpStatus.OK);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public Optional<Customer> findCustomers(String name){
-        return customerService.findByName(name);
     }
 }

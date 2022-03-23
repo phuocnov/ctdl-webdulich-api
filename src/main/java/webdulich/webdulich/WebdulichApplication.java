@@ -26,4 +26,13 @@ public class WebdulichApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 	}
+
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+			}
+		};
+	}
 }
