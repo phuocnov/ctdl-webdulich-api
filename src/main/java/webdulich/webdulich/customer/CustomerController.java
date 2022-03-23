@@ -63,6 +63,6 @@ public class CustomerController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public Optional<Customer> findCustomers(String name){
-        return customerService.findByName(name, name)
+        return customerService.findByName(name);
     }
 }
