@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -39,6 +40,7 @@ public class Tour {
     private LocalDate startDate;
     private LocalDate endDate;
     private int cost;
+    @Lob
     private String shortDescription;
 
 
@@ -52,19 +54,12 @@ public class Tour {
         this.shortDescription = shortDescription;
         this.details = details;
 
-        setDateLast();
-        setNightLast();
+        this.dateLast = ChronoUnit.DAYS.between(this.startDate, this.endDate);
+        this.nightLast = this.dateLast - 1;
     }
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tour_detail", referencedColumnName = "id")
     private TourDetails details;
-
-    public void setDateLast(){
-        this.dateLast = ChronoUnit.DAYS.between(this.startDate, this.endDate);
-    }
-    public void setNightLast(){
-        this.nightLast = this.dateLast - 1;
-    }
 }
