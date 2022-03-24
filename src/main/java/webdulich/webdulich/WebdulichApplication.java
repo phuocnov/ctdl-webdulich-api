@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import webdulich.webdulich.role.RoleRepository;
 import webdulich.webdulich.role.Role;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class WebdulichApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(WebdulichApplication.class, args);
@@ -30,5 +30,10 @@ public class WebdulichApplication implements CommandLineRunner {
 				registry.addMapping("/**").allowedOrigins("http://localhost:8080");
 			}
 		};
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+
 	}
 }
