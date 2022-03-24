@@ -17,7 +17,7 @@ public class CustomerService {
     }
 
     public Optional<Customer> findByName(String name){
-        return customerRepository.findByUsername(name);
+        return customerRepository.findByName(name);
     }
 
     public Optional<Customer> findById(long id){
