@@ -5,10 +5,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import org.checkerframework.common.aliasing.qual.Unique;
+
 @Setter
 @Getter
 @Entity
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints= {
+    @UniqueConstraint(columnNames = {"name"})
+})
 public class Role {
 
     @Id
@@ -16,5 +20,6 @@ public class Role {
     private long id;
 
     @Column(length = 60)
+    @Unique
     private String name;
 }

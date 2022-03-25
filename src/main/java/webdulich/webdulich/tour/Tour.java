@@ -32,19 +32,15 @@ public class Tour {
     private long id;
     private String name;
     private String tour;
-    @Transient
-    private long dateLast;
-    @Transient
-    private long nightLast;
     private String schedule;
     private LocalDate startDate;
     private LocalDate endDate;
-    private int cost;
+    private Long cost;
     @Lob
     private String shortDescription;
 
 
-    public Tour(String name, String tour,  String schedule, LocalDate startDate, LocalDate endDate, int cost, String shortDescription, TourDetails details) {
+    public Tour(String name, String tour,  String schedule, LocalDate startDate, LocalDate endDate, Long cost, String shortDescription, TourDetails details) {
         this.name = name;
         this.tour = tour;
         this.schedule = schedule;
@@ -53,9 +49,6 @@ public class Tour {
         this.cost = cost;
         this.shortDescription = shortDescription;
         this.details = details;
-
-        this.dateLast = ChronoUnit.DAYS.between(this.startDate, this.endDate);
-        this.nightLast = this.dateLast - 1;
     }
 
 

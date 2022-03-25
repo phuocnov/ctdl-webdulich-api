@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TourService implements ITourService{
+public class TourService {
     @Autowired
     private final TourRepository tourRepository;
 
@@ -25,8 +25,7 @@ public class TourService implements ITourService{
         tourRepository.save(tour);
         return new ResponseEntity<Tour>(tour, HttpStatus.OK);
     }
-
-    @Override
+    
     public Optional<Tour> findById(long id) {
         return tourRepository.findById(id);
     }

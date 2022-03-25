@@ -21,6 +21,7 @@ public class Booking {
     private Customer customer;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Lob
     @JoinColumn(name = "tour_id", referencedColumnName = "id")
     private Tour tour;
     private String phoneNumber;

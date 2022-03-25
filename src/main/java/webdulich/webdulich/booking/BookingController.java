@@ -41,15 +41,11 @@ public class BookingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Booking> book(@RequestBody BookingDto params){
-        System.out.print("zooo");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.print(userDetails.toString());
-        Customer customer = customerService.findByName(userDetails.getUsername()).get();
-        System.out.print("zooo3");
+        Customer customer = customerService.findByUsername(userDetails.getUsername()).get();
         Tour tour = tourService.findById(params.getTourId()).get();
-        System.out.print("zooo4");
 
 
         System.out.println(customer.toString());
