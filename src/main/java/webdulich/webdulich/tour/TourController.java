@@ -41,6 +41,7 @@ public class TourController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Tour> getTourById(@PathVariable(name = "id") long id) {
+        System.out.println("Gia tri ID: "+ id);
         Optional<Tour> tour = tourService.findById(id);
         return new ResponseEntity<Tour>(tour.get(), HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package webdulich.webdulich.booking;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,10 @@ public class BookingService {
 
     public List<Booking> gBookings() {
         return bookingRepository.findAll();
+    }
+
+    public Optional<Booking> findById(Long id){
+        return bookingRepository.findById(id);
     }
 
     public ResponseEntity<Booking> creteBooking(Booking booking) {

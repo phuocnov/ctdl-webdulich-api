@@ -1,13 +1,17 @@
 package webdulich.webdulich.booking;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +58,11 @@ public class BookingController {
 
         Booking booking = new Booking(customer, tour, params.getPhoneNumber());
         return bookingService.creteBooking(booking);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Booking> getTourById(@PathVariable(name = "id") long id) {
+        Optional<Booking> booking = bookingService.findById(id);
+        return new ResponseEntity<Booking>(booking.get(), HttpStatus.OK);
     }
 }
